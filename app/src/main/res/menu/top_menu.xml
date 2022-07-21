@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/arxivItem"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/savedItem"
+        android:title="@string/saved_papers" />
+    <item
+        android:id="@+id/foldersItem"
+        android:title="@string/Folders" />
+    <item
+        android:id="@+id/searchItem"
+        android:title="@string/search" />
+    <item
+        android:id="@+id/settingsItem"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/helpItem"
+        android:title="@string/help" />
+    <item
+        android:id="@+id/exitItem"
+        android:title="@string/exit" />
+</menu>

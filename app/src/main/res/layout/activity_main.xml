@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10sp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        tools:context=".HomeActivity">
+
+        <TextView
+            android:id="@+id/addTipTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/add_tip"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/light_red"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/feedButton"
+            app:layout_constraintTop_toTopOf="@+id/feedButton" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_feed"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="?android:textColorPrimary" />
+
+                <TableLayout
+                    android:id="@+id/feedTableLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/feedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:contentDescription="@string/description_feed_button"
+            android:focusable="true"
+            app:backgroundTint="@color/light_red"
+            app:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?android:textColorPrimary" />
+
+        <TextView
+            android:id="@+id/timerTextField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="?android:textColorPrimary" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="5sp"
+            android:paddingRight="5sp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5sp"
+                android:gravity="center">
+
+                <android.widget.Button
+                    android:id="@+id/savedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3sp"
+                    android:background="@drawable/border_button_plain"
+                    android:drawableStart="@drawable/ic_baseline_archive_24_green"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:text="@string/saved_papers"
+                    android:textColor="?android:textColorPrimary" />
+
+                <android.widget.Button
+                    android:id="@+id/searchButtonMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3sp"
+                    android:background="@drawable/border_button_plain"
+                    android:drawableStart="@drawable/ic_baseline_search_24"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:text="@string/arxiv_search"
+                    android:textColor="?android:textColorPrimary" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5sp"
+                android:gravity="center">
+
+                <android.widget.Button
+                    android:id="@+id/foldersButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3sp"
+                    android:background="@drawable/border_button_plain"
+                    android:drawableStart="@drawable/ic_baseline_folder_24"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:text="@string/Folders"
+                    android:textColor="?android:textColorPrimary" />
+
+                <android.widget.Button
+                    android:id="@+id/settingsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3sp"
+                    android:background="@drawable/border_button_plain"
+                    android:drawableStart="@drawable/ic_baseline_settings_24"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:text="@string/settings"
+                    android:textColor="?android:textColorPrimary" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+

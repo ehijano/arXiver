@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23072916666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/border_button.xml" value="0.30833333333333335" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/border_button_delete.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/border_button_hide.xml" value="0.30833333333333335" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/border_button_plain.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/border_button_read.xml" value="0.30833333333333335" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/border_button_save.xml" value="0.30833333333333335" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/delete_button_image.xml" value="0.23072916666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/divider.xml" value="0.23072916666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/ic_baseline_archive_24.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/ic_baseline_save_alt_24.xml" value="0.2390625" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/ic_baseline_subtitles_off_24.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/ic_baseline_visibility_off_24.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.23072916666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.23072916666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/drawable/paper_background_color.xml" value="0.1" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout-v23/paper_row_layout.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_browse.xml" value="0.25" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_day.xml" value="0.5474339035769828" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_folders.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_help.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_read_pdf.xml" value="0.25" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_saved.xml" value="0.32518115942028986" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_search.xml" value="0.33" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_search_results.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/activity_settings.xml" value="0.21458333333333332" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/day_recyclerview_detail.xml" value="0.21354166666666666" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/day_recyclerview_layout.xml" value="0.21354166666666666" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/day_row_layout.xml" value="0.48677248677248675" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/feed_manager.xml" value="0.25" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/folder_layout.xml" value="0.2838541666666667" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/folder_manager.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/folder_organizer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/order_row_layout.xml" value="0.28055555555555556" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/paper_row_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/pdf_item.xml" value="0.15648148148148147" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/search_row_layout.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/splash_layout.xml" value="0.2171875" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/layout/tip_layout.xml" value="0.22" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/menu/top_menu.xml" value="0.1578125" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23072916666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23020833333333332" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/mipmap-anydpi-v26/pocketArXiv_logo.xml" value="0.23072916666666668" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/xml/ic_launcher_foreground.xml" value="0.21458333333333332" />
+        <entry key="..\:/Users/eliot/AndroidStudioProjects/TutorialApp2/app/src/main/res/xml/network_security_config.xml" value="0.19583333333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
