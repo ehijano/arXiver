@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.folder_system;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,6 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.core.content.res.ResourcesCompat;
+
+import com.example.arXiver_module.ArXivPaper;
+import com.example.arXiver_module.R;
 
 import java.util.ArrayList;
 

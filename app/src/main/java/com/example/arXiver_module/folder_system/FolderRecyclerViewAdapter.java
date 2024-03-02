@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.folder_system;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.arXiver_module.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

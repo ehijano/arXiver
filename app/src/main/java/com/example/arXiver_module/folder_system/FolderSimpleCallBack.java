@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.folder_system;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;

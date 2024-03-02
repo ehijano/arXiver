@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.folder_system;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.arXiver_module.ArXivPaper;
+import com.example.arXiver_module.ParentActivity;
+import com.example.arXiver_module.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -18,7 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 
-public class FolderActivity extends  ParentActivity implements FolderManagerDialog.FolderManagerListener{
+public class FolderActivity extends ParentActivity implements FolderManagerDialog.FolderManagerListener{
 
     private Animation rotateOpen;
     private Animation rotateClose;

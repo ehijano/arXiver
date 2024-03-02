@@ -29,6 +29,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.example.arXiver_module.folder_system.FolderActivity;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -76,7 +78,7 @@ public class ParentActivity extends AppCompatActivity {
             parentFinish();
             return true;
         }else if(item.getItemId() == id.foldersItem){
-            Intent folderIntent = new Intent(getApplicationContext(),FolderActivity.class);
+            Intent folderIntent = new Intent(getApplicationContext(), FolderActivity.class);
             folderIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(folderIntent);
             parentFinish();

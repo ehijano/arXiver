@@ -44,7 +44,7 @@ public class ArXivScanner {
 
     static final String ARXIV_RSS_TITLE_PATTERN = "(.*?) \\(arXiv:(.*?) \\[(.*?)](.*?)\\)";
     static final String BASE_URL_QUERY = "http://export.arxiv.org/api/query?search_query=";
-    static final String BASE_URL_RSS = "http://export.arxiv.org/rss/";
+    static final String BASE_URL_RSS = "https://rss.arxiv.org/rss/";//"http://export.arxiv.org/rss/";
     static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     boolean knowsCategories = false;
     String[] allCategories;
@@ -221,13 +221,18 @@ public class ArXivScanner {
     public static ArrayList<ArXivPaper> extractPapersRSS(String category) {
         ArrayList<ArXivPaper> result = new ArrayList<>();
 
+        System.out.println("Extracting RSS...");
+
         try {
             URL url = new URL(BASE_URL_RSS + category);
 
 
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            System.out.println("URL attempt at:");
+            System.out.println(url);
             Document document = documentBuilder.parse(url.openStream());
+            System.out.println("Done");
             document.getDocumentElement().normalize();
 
             NodeList itemList = document.getElementsByTagName("item");

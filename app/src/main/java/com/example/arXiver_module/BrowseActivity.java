@@ -3,6 +3,9 @@ package com.example.arXiver_module;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.arXiver_module.folder_system.Folder;
+import com.example.arXiver_module.folder_system.FolderManagerDialog;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

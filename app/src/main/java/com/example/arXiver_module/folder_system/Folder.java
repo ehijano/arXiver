@@ -1,9 +1,9 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.folder_system;
 
 public class Folder {
 
-    final String folderName;
-    String folderPrefs;
+    public final String folderName;
+    public String folderPrefs;
     public static String savedFolderName = "";
     public static String SAVED_PREFS = "";
 

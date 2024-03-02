@@ -20,6 +20,8 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.example.arXiver_module.folder_system.Folder;
+import com.example.arXiver_module.folder_system.FolderActivity;
 import com.example.arXiver_module.task_util.BaseTask;
 import com.example.arXiver_module.task_util.TaskRunner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -126,7 +128,7 @@ public class HomeActivity extends ParentActivity implements FeedManagerDialog.Fe
         // Folders Button
         Button foldersButton = findViewById(R.id.foldersButton);
         View.OnClickListener foldersListener = view -> {
-            Intent folderIntent = new Intent(getApplicationContext(),FolderActivity.class);
+            Intent folderIntent = new Intent(getApplicationContext(), FolderActivity.class);
             folderIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(folderIntent);
         };
