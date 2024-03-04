@@ -218,7 +218,135 @@ public class ArXivScanner {
 
     }
 
+    public static String removeFirstLine(String text) {
+        String[] lines = text.split("\n", 2); // Split the text into two parts, the first line and the rest
+        return (lines.length > 1) ? lines[1] : ""; // Return the rest, if it exists, otherwise return an empty string
+    }
+
+    public static String extractArxivId(String url) {
+        // Regular expression to match the arXiv ID in various formats of the URL
+        // This regex covers http, https, with or without www, and different arXiv base URLs
+        String regex = "(?i)https?://(?:www\\.)?arxiv\\.org/(?:abs|pdf)/([\\w.]+)/?(?:\\.pdf)?";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(url);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return "";
+        }
+    }
+
     public static ArrayList<ArXivPaper> extractPapersRSS(String category) {
+        ArrayList<ArXivPaper> result = new ArrayList<>();
+
+        System.out.println("Extracting RSS...");
+
+        try {
+            URL url = new URL(BASE_URL_RSS + category);
+
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(url.openStream());
+            document.getDocumentElement().normalize();
+
+            NodeList itemList = document.getElementsByTagName("item");
+
+            for (int i = 0; i < itemList.getLength(); i++) {
+                Node itemNode = itemList.item(i);
+
+
+                if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element item = (Element) itemNode;
+
+                    // Title, id, and categories
+                    String title = "";
+                    String id = "";
+                    String[] categories = null;
+                    boolean isNew = true;
+
+                    if (item.getElementsByTagName("title").getLength() > 0) {
+                        title = item.getElementsByTagName("title").item(0)
+                                .getTextContent();
+                    }
+
+                    // URL
+                    String pdfURL = "";
+                    if (item.getElementsByTagName("link").getLength() > 0) {
+                        String link = item.getElementsByTagName("link").item(0)
+                                .getTextContent();
+                        pdfURL = link.toString().replace("/abs/", "/pdf/") + ".pdf";
+                        pdfURL = pdfURL.replace("https://", "http://");
+                        id = ArXivScanner.extractArxivId(link);
+                    }
+
+                    // Abstract
+                    String abs = "";
+                    if (item.getElementsByTagName("description").getLength() > 0) {
+                        String rawAbs = item.getElementsByTagName("description").item(0).getTextContent();
+                        abs = ArXivScanner.removeFirstLine(rawAbs);
+                    }
+
+                    // Date
+                    // 2021-08-03T17:41:33Z
+                    Date dateObj = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
+                    String todayDate = simpleDateFormat.format(dateObj);
+
+                    // Authors
+                    String rawAuthors = item.getElementsByTagName("dc:creator").item(0).getTextContent();
+                    String[] authors = rawAuthors.split(", ");
+
+                    // Categories
+                    int category_count = item.getElementsByTagName("category").getLength();
+                    if (category_count > 0){
+                        categories = new String[category_count];
+                        for (int j = 0; j < category_count; j++){
+                            Element categoryElement = (Element) item.getElementsByTagName("category").item(j);
+                            categories[j] = categoryElement.getTextContent().toString();
+                        }
+                    }
+
+                    // Announce type
+                    if(item.getElementsByTagName("arxiv:announce_type").getLength() > 0){
+                        String announce_text = item.getElementsByTagName("arxiv:announce_type").item(0).getTextContent().toString();
+                        //System.out.println(announce_text);
+                        //System.out.println(announce_text.equals("new"));
+                        if (announce_text.equals("new")){
+                            isNew = false;
+                        }
+                    }
+
+                    if(false) { // Why dont yuu log correctly? Why are you so lazy?
+                        System.out.println("SUMMARY: ");
+                        System.out.println(title);
+                        System.out.println(id);
+                        System.out.println(java.util.Arrays.toString(authors));
+                        System.out.println(java.util.Arrays.toString(categories));
+                        System.out.println(pdfURL);
+                        System.out.println(todayDate);
+                        System.out.println(abs);
+                        System.out.println(isNew);
+                    }
+
+                    // paper
+                    if((!id.isEmpty()) && (!title.isEmpty()) && (categories != null) && (authors.length>0) && (!pdfURL.isEmpty())) {
+                        ArXivPaper paper = new ArXivPaper(title, id.replace("/", "-"), authors, categories, pdfURL, todayDate, todayDate, abs, isNew);
+                        result.add(paper);
+                    }
+                }
+            }
+        }catch (IOException e) {// No internet connection
+            return null;
+        }catch( ParserConfigurationException | SAXException e) {// Parser problem
+            return null;
+        }
+        return result;
+    }
+
+
+    public static ArrayList<ArXivPaper> extractPapersRSS_legacy(String category) {
         ArrayList<ArXivPaper> result = new ArrayList<>();
 
         System.out.println("Extracting RSS...");
@@ -237,11 +365,17 @@ public class ArXivScanner {
 
             NodeList itemList = document.getElementsByTagName("item");
 
+
+
             for (int i = 0; i < itemList.getLength(); i++) {
                 Node itemNode = itemList.item(i);
+
+
                 if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element item = (Element) itemNode;
+
+                    //System.out.println(item.getTextContent().toString());
 
                     // Title, id, and categories
                     String title = "";
@@ -250,6 +384,7 @@ public class ArXivScanner {
                     boolean isNew = true;
 
                     if (item.getElementsByTagName("title").getLength() > 0) {
+
                         Pattern pattern = Pattern.compile(ARXIV_RSS_TITLE_PATTERN);
                         Matcher matcher = pattern.matcher(
                                 item.getElementsByTagName("title").item(0).getTextContent()
