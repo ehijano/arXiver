@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,11 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.example.arXiver_module.ParentActivity;
+import com.example.arXiver_module.R;
+import com.example.arXiver_module.results.ResultsActivity;
+import com.example.arXiver_module.arxiv.ArXivScanner;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

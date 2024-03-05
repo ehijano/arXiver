@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.daily_feed;
 
 import android.content.Intent;
 import android.os.Build;
@@ -13,6 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.arXiver_module.ActivityAdapterListener;
+import com.example.arXiver_module.browse.BrowseActivity;
+import com.example.arXiver_module.browse.BrowseSwipeToDeleteCallBack;
+import com.example.arXiver_module.R;
+import com.example.arXiver_module.arxiv.ArXivPaper;
+import com.example.arXiver_module.arxiv.ArXivScanner;
 import com.example.arXiver_module.task_util.BaseTask;
 import com.example.arXiver_module.task_util.TaskRunner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,7 +30,7 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-public class DayActivity extends BrowseActivity{
+public class DayActivity extends BrowseActivity {
     DayRecyclerViewAdapter dayRecyclerViewAdapter;
 
     RecyclerView recyclerView;

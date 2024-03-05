@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.settings;
 
 
 import android.content.Context;
@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.SeekBar;
 
 import androidx.appcompat.widget.SwitchCompat;
+
+import com.example.arXiver_module.ParentActivity;
+import com.example.arXiver_module.R;
 
 
 public class SettingsActivity extends ParentActivity {

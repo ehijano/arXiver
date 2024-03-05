@@ -19,13 +19,15 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.arXiver_module.arxiv.ArXivPaper;
+import com.example.arXiver_module.browse.BrowseRecyclerViewAdapter;
 import com.example.arXiver_module.items.GeneralItem;
 import com.example.arXiver_module.task_util.BaseTask;
 import com.example.arXiver_module.task_util.TaskRunner;
 
 import java.util.ArrayList;
 
-public class SavedRecyclerViewAdapter extends BrowseRecyclerViewAdapter{
+public class SavedRecyclerViewAdapter extends BrowseRecyclerViewAdapter {
 
     private final String PREFS;
     public SavedRecyclerViewAdapter(Context context, ActivityAdapterListener listener, String PREFS){

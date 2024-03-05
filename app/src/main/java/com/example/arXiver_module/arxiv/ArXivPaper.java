@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.arxiv;
 
 
 import com.example.arXiver_module.items.GeneralItem;
@@ -15,13 +15,13 @@ public class ArXivPaper extends GeneralItem {
     public final String updatedDate;
 
     public boolean isExpanded;
-    public final boolean isNew;
+    public final String announceType;
     public String dateSaved = "";
     public Long downloadID;
     public boolean isSelected = false;
 
 
-    public ArXivPaper(String title, String id, String[] authors, String[] categories, String pdfURL, String publishedDate, String updatedDate, String abs, boolean isNew) {
+    public ArXivPaper(String title, String id, String[] authors, String[] categories, String pdfURL, String publishedDate, String updatedDate, String abs, String announceType) {
         this.title = title;
         this.id = id;
         this.authors = authors;
@@ -31,7 +31,7 @@ public class ArXivPaper extends GeneralItem {
         this.abs = abs;
         this.categories = categories;
         this.isExpanded = false;
-        this.isNew = isNew;
+        this.announceType = announceType;
 
     }
 

@@ -20,7 +20,7 @@
         android:theme="@style/Theme.TutorialApp2"
         tools:targetApi="n">
         <activity
-            android:name=".DayActivity"
+            android:name=".daily_feed.DayActivity"
             android:exported="true" />
         <activity
             android:name=".folder_system.FolderActivity"
@@ -29,13 +29,13 @@
             android:name=".InsideFolderActivity"
             android:exported="true" />
         <activity
-            android:name=".ResultsActivity"
+            android:name=".results.ResultsActivity"
             android:exported="true" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".search.SearchActivity"
             android:exported="true" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:exported="true" />
         <activity
             android:name=".HelpActivity"

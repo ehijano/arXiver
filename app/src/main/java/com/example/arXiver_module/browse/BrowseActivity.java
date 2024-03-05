@@ -1,8 +1,12 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.browse;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.arXiver_module.ParentActivity;
+import com.example.arXiver_module.R;
+import com.example.arXiver_module.arxiv.ArXivPaper;
+import com.example.arXiver_module.arxiv.ArXivScanner;
 import com.example.arXiver_module.folder_system.Folder;
 import com.example.arXiver_module.folder_system.FolderManagerDialog;
 

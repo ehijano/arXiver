@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.results;
 
 
 import android.annotation.SuppressLint;
@@ -9,6 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.arXiver_module.ActivityAdapterListener;
+import com.example.arXiver_module.R;
+import com.example.arXiver_module.arxiv.ArXivPaper;
+import com.example.arXiver_module.browse.BrowseRecyclerViewAdapter;
 import com.example.arXiver_module.items.GeneralItem;
 import com.example.arXiver_module.items.ResultsItem;
 import com.google.android.material.snackbar.Snackbar;
@@ -20,7 +24,7 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-public class ResultsRecyclerViewAdapter extends BrowseRecyclerViewAdapter{
+public class ResultsRecyclerViewAdapter extends BrowseRecyclerViewAdapter {
 
     int page = 0;
     int numberFound = 0;

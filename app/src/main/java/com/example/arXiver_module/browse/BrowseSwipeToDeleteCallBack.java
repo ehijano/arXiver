@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.browse;
 
 import static com.example.arXiver_module.ParentActivity.FONT_PREFS;
 
@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.arXiver_module.R;
+import com.example.arXiver_module.browse.BrowseRecyclerViewAdapter;
 import com.example.arXiver_module.items.GeneralItem;
 
 import java.util.Objects;

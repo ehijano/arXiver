@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.arXiver_module.ArXivPaper;
+import com.example.arXiver_module.arxiv.ArXivPaper;
 import com.example.arXiver_module.ParentActivity;
 import com.example.arXiver_module.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

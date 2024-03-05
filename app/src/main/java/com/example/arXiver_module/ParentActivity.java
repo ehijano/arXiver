@@ -30,6 +30,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.arXiver_module.folder_system.FolderActivity;
+import com.example.arXiver_module.search.SearchActivity;
+import com.example.arXiver_module.settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,12 +86,12 @@ public class ParentActivity extends AppCompatActivity {
             parentFinish();
             return true;
         }else if (item.getItemId() == id.searchItem){
-            Intent searchIntent = new Intent(getApplicationContext(),SearchActivity.class);
+            Intent searchIntent = new Intent(getApplicationContext(), SearchActivity.class);
             startActivity(searchIntent);
             parentFinish();
             return true;
         }else if(item.getItemId() ==  id.settingsItem){
-            Intent settingsIntent = new Intent(getApplicationContext(),SettingsActivity.class);
+            Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(settingsIntent);
             parentFinish();
             return true;
