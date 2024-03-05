@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.daily_feed;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,6 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.arXiver_module.ActivityAdapterListener;
+import com.example.arXiver_module.browse.BrowseRecyclerViewAdapter;
+import com.example.arXiver_module.R;
+import com.example.arXiver_module.arxiv.ArXivPaper;
 import com.example.arXiver_module.items.GeneralItem;
 import com.example.arXiver_module.items.HeaderItem;
 
@@ -20,14 +24,14 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-public class DayRecyclerViewAdapter extends BrowseRecyclerViewAdapter{
+public class DayRecyclerViewAdapter extends BrowseRecyclerViewAdapter {
 
     final Context context;
     final String category;
     ArrayList<ArXivPaper> papers;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public DayRecyclerViewAdapter(Context context,ActivityAdapterListener listener, String category) throws IOException, ParserConfigurationException, SAXException {
+    public DayRecyclerViewAdapter(Context context, ActivityAdapterListener listener, String category) throws IOException, ParserConfigurationException, SAXException {
         super(context,listener);
         this.context = context;
         this.category = category;
@@ -61,9 +65,9 @@ public class DayRecyclerViewAdapter extends BrowseRecyclerViewAdapter{
         ArrayList<ArXivPaper> replacedPapers = new ArrayList<>();
 
         for (ArXivPaper paper: papers){
-            if (paper.isNew && paper.categories[0].equals(category))  {
+            if (paper.announceType.equals("new") && paper.categories[0].equals(category))  {
                 if (!sharedPreferencesDeleted.contains(paper.id)){ newPapers.add(paper); }
-            }else if (paper.isNew) {
+            }else if (paper.announceType.equals("cross")) {
                 if (!sharedPreferencesDeleted.contains(paper.id)){ crossListPapers.add(paper); }
             }else {
                 if (!sharedPreferencesDeleted.contains(paper.id)){ replacedPapers.add(paper); }

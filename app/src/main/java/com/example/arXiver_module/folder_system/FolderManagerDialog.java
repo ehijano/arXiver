@@ -22,7 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.example.arXiver_module.ArXivPaper;
+import com.example.arXiver_module.arxiv.ArXivPaper;
 import com.example.arXiver_module.R;
 
 import java.util.ArrayList;

@@ -3,16 +3,18 @@ package com.example.arXiver_module;
 import android.app.Activity;
 import android.view.View;
 
+import com.example.arXiver_module.arxiv.ArXivPaper;
+import com.example.arXiver_module.arxiv.ArXivScanner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class ActivityAdapterListener {
-    boolean isSelectMode;
+    public boolean isSelectMode;
 
     public final FloatingActionButton[] allFABs;
 
-    ArrayList<ArXivPaper> selectedPapers = new ArrayList<>();
+    public ArrayList<ArXivPaper> selectedPapers = new ArrayList<>();
     final Activity activity;
 
     public ActivityAdapterListener(Activity activity, FloatingActionButton[] allFABs,  boolean isSelectMode){

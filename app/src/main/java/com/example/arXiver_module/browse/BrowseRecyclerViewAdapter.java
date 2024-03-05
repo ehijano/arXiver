@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.browse;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
@@ -19,6 +19,11 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.arXiver_module.ActivityAdapterListener;
+import com.example.arXiver_module.ParentActivity;
+import com.example.arXiver_module.R;
+import com.example.arXiver_module.arxiv.ArXivPaper;
+import com.example.arXiver_module.arxiv.ArXivScanner;
 import com.example.arXiver_module.items.DateItem;
 import com.example.arXiver_module.items.GeneralItem;
 import com.example.arXiver_module.items.HeaderItem;
@@ -35,11 +40,11 @@ import java.util.TimeZone;
 
 public abstract class BrowseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    final Context context;
-    ArrayList<GeneralItem> consolidatedItems = new ArrayList<>();
-    final ArXivScanner arXivScanner;
-    boolean isSelectMode = false;
-    ArrayList<ArXivPaper> selectedPapers = new ArrayList<>();
+    public final Context context;
+    public ArrayList<GeneralItem> consolidatedItems = new ArrayList<>();
+    public final ArXivScanner arXivScanner;
+    public boolean isSelectMode = false;
+    public ArrayList<ArXivPaper> selectedPapers = new ArrayList<>();
     final ActivityAdapterListener listener;
 
     public static final String DOWNLOAD_PREFS = "downloadPrefs";
@@ -341,12 +346,12 @@ public abstract class BrowseRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         final TextView updatedTextView;
         final TextView publishedTextView;
         final LinearLayout extrasLinearLayout;
-        final LinearLayout datesLinearLayout;
+        public final LinearLayout datesLinearLayout;
         final ConstraintLayout paperConstraintLayout;
-        final SwitchCompat offlineSwitch;
-        final Button saveButton;
-        final Button deleteButton;
-        final Button readButton;
+        public final SwitchCompat offlineSwitch;
+        public final Button saveButton;
+        public final Button deleteButton;
+        public final Button readButton;
 
         public PaperRecyclerViewHolder(@NonNull View itemView, ActivityAdapterListener listener){
             super(itemView);

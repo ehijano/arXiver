@@ -1,4 +1,4 @@
-package com.example.arXiver_module;
+package com.example.arXiver_module.arxiv;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -9,7 +9,6 @@ import com.example.arXiver_module.items.DateItem;
 import com.example.arXiver_module.items.GeneralItem;
 
 import org.apache.commons.text.StringEscapeUtils;
-import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -45,6 +44,8 @@ public class ArXivScanner {
     static final String ARXIV_RSS_TITLE_PATTERN = "(.*?) \\(arXiv:(.*?) \\[(.*?)](.*?)\\)";
     static final String BASE_URL_QUERY = "http://export.arxiv.org/api/query?search_query=";
     static final String BASE_URL_RSS = "https://rss.arxiv.org/rss/";//"http://export.arxiv.org/rss/";
+    static final String BASE_GITHUB_FETCH_RSS = "https://raw.githubusercontent.com/ehijano/rss_fetch/master/rss_data/";
+    static final int MAX_GITHUB_FETCH_ATTEMPTS = 5;
     static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     boolean knowsCategories = false;
     String[] allCategories;
@@ -207,7 +208,7 @@ public class ArXivScanner {
                     }
 
                     // paper
-                    ArXivPaper paper = new ArXivPaper(title, id.replace("/","-"), authors, categories, pdfString, publishedDate, updatedDate, abs, false);
+                    ArXivPaper paper = new ArXivPaper(title, id.replace("/","-"), authors, categories, pdfString, publishedDate, updatedDate, abs, "new");
                     result.add(paper);
                 }
             }
@@ -237,242 +238,146 @@ public class ArXivScanner {
         }
     }
 
+    private static ArrayList<ArXivPaper> parseFeed(Document document) {
+
+        ArrayList<ArXivPaper> result = new ArrayList<>();
+
+        NodeList itemList = document.getElementsByTagName("item");
+
+        for (int i = 0; i < itemList.getLength(); i++) {
+            Node itemNode = itemList.item(i);
+
+
+            if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                Element item = (Element) itemNode;
+
+                // Title, id, and categories
+                String title = "";
+                String id = "";
+                String[] categories = null;
+                String announceType = "";
+
+                if (item.getElementsByTagName("title").getLength() > 0) {
+                    title = item.getElementsByTagName("title").item(0)
+                            .getTextContent();
+                }
+
+                // URL
+                String pdfURL = "";
+                if (item.getElementsByTagName("link").getLength() > 0) {
+                    String link = item.getElementsByTagName("link").item(0)
+                            .getTextContent();
+                    pdfURL = link.toString().replace("/abs/", "/pdf/") + ".pdf";
+                    pdfURL = pdfURL.replace("https://", "http://");
+                    id = ArXivScanner.extractArxivId(link);
+                }
+
+                // Abstract
+                String abs = "";
+                if (item.getElementsByTagName("description").getLength() > 0) {
+                    String rawAbs = item.getElementsByTagName("description").item(0).getTextContent();
+                    abs = ArXivScanner.removeFirstLine(rawAbs);
+                }
+
+                // Date
+                // 2021-08-03T17:41:33Z
+                Date dateObj = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
+                String todayDate = simpleDateFormat.format(dateObj);
+
+                // Authors
+                String rawAuthors = item.getElementsByTagName("dc:creator").item(0).getTextContent();
+                String[] authors = rawAuthors.split(", ");
+
+                // Categories
+                int category_count = item.getElementsByTagName("category").getLength();
+                if (category_count > 0) {
+                    categories = new String[category_count];
+                    for (int j = 0; j < category_count; j++) {
+                        Element categoryElement = (Element) item.getElementsByTagName("category").item(j);
+                        categories[j] = categoryElement.getTextContent().toString();
+                    }
+                }
+
+                // Announce type
+                if (item.getElementsByTagName("arxiv:announce_type").getLength() > 0) {
+                    announceType = item.getElementsByTagName("arxiv:announce_type").item(0).getTextContent().toString();
+                }
+
+                if (false) { // Why dont you log correctly? Why are you so lazy?
+                    System.out.println("SUMMARY: ");
+                    System.out.println(title);
+                    System.out.println(id);
+                    System.out.println(java.util.Arrays.toString(authors));
+                    System.out.println(java.util.Arrays.toString(categories));
+                    System.out.println(pdfURL);
+                    System.out.println(todayDate);
+                    System.out.println(abs);
+                    System.out.println(announceType);
+                }
+
+                // paper
+                if ((!id.isEmpty()) && (!title.isEmpty()) && (categories != null) && (authors.length > 0) && (!pdfURL.isEmpty())) {
+                    ArXivPaper paper = new ArXivPaper(title, id.replace("/", "-"), authors, categories, pdfURL, todayDate, todayDate, abs, announceType);
+                    result.add(paper);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private static  ArrayList<ArXivPaper> extractPapersFromURLString(String url_string){
+        ArrayList<ArXivPaper> result = new ArrayList<>();
+
+        try {
+            URL url = new URL(url_string);
+
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(url.openStream());
+            document.getDocumentElement().normalize();
+
+            result = parseFeed(document);
+
+        }catch (IOException e) {// No internet connection
+            return null;
+        }catch( ParserConfigurationException | SAXException e) {// Parser problem
+            return null;
+        }
+        return result;
+
+    }
+
     public static ArrayList<ArXivPaper> extractPapersRSS(String category) {
-        ArrayList<ArXivPaper> result = new ArrayList<>();
+        ArrayList<ArXivPaper> results = new ArrayList<>();
 
-        System.out.println("Extracting RSS...");
+        // Attempt arxiv feed
+        results = extractPapersFromURLString(BASE_URL_RSS + category);
 
-        try {
-            URL url = new URL(BASE_URL_RSS + category);
-
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document document = documentBuilder.parse(url.openStream());
-            document.getDocumentElement().normalize();
-
-            NodeList itemList = document.getElementsByTagName("item");
-
-            for (int i = 0; i < itemList.getLength(); i++) {
-                Node itemNode = itemList.item(i);
+        // If today is empty, check the github fetch
+        int attempts = 1;
+        TimeZone estTimeZone = TimeZone.getTimeZone("America/New_York");
+        Calendar calendar = Calendar.getInstance(estTimeZone);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        while (((results == null) || (results.isEmpty())) && (attempts < MAX_GITHUB_FETCH_ATTEMPTS) ){
 
 
-                if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
+            String dateString = dateFormat.format(calendar.getTime());
+            System.out.println("FETHING GITHUB DATE:");
+            System.out.println(dateString);
 
-                    Element item = (Element) itemNode;
+            String urlStr = BASE_GITHUB_FETCH_RSS + category + "/" + dateString + "_" + category + ".xml";
 
-                    // Title, id, and categories
-                    String title = "";
-                    String id = "";
-                    String[] categories = null;
-                    boolean isNew = true;
+            results = extractPapersFromURLString(urlStr);
 
-                    if (item.getElementsByTagName("title").getLength() > 0) {
-                        title = item.getElementsByTagName("title").item(0)
-                                .getTextContent();
-                    }
-
-                    // URL
-                    String pdfURL = "";
-                    if (item.getElementsByTagName("link").getLength() > 0) {
-                        String link = item.getElementsByTagName("link").item(0)
-                                .getTextContent();
-                        pdfURL = link.toString().replace("/abs/", "/pdf/") + ".pdf";
-                        pdfURL = pdfURL.replace("https://", "http://");
-                        id = ArXivScanner.extractArxivId(link);
-                    }
-
-                    // Abstract
-                    String abs = "";
-                    if (item.getElementsByTagName("description").getLength() > 0) {
-                        String rawAbs = item.getElementsByTagName("description").item(0).getTextContent();
-                        abs = ArXivScanner.removeFirstLine(rawAbs);
-                    }
-
-                    // Date
-                    // 2021-08-03T17:41:33Z
-                    Date dateObj = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime();
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
-                    String todayDate = simpleDateFormat.format(dateObj);
-
-                    // Authors
-                    String rawAuthors = item.getElementsByTagName("dc:creator").item(0).getTextContent();
-                    String[] authors = rawAuthors.split(", ");
-
-                    // Categories
-                    int category_count = item.getElementsByTagName("category").getLength();
-                    if (category_count > 0){
-                        categories = new String[category_count];
-                        for (int j = 0; j < category_count; j++){
-                            Element categoryElement = (Element) item.getElementsByTagName("category").item(j);
-                            categories[j] = categoryElement.getTextContent().toString();
-                        }
-                    }
-
-                    // Announce type
-                    if(item.getElementsByTagName("arxiv:announce_type").getLength() > 0){
-                        String announce_text = item.getElementsByTagName("arxiv:announce_type").item(0).getTextContent().toString();
-                        //System.out.println(announce_text);
-                        //System.out.println(announce_text.equals("new"));
-                        if (announce_text.equals("new")){
-                            isNew = false;
-                        }
-                    }
-
-                    if(false) { // Why dont yuu log correctly? Why are you so lazy?
-                        System.out.println("SUMMARY: ");
-                        System.out.println(title);
-                        System.out.println(id);
-                        System.out.println(java.util.Arrays.toString(authors));
-                        System.out.println(java.util.Arrays.toString(categories));
-                        System.out.println(pdfURL);
-                        System.out.println(todayDate);
-                        System.out.println(abs);
-                        System.out.println(isNew);
-                    }
-
-                    // paper
-                    if((!id.isEmpty()) && (!title.isEmpty()) && (categories != null) && (authors.length>0) && (!pdfURL.isEmpty())) {
-                        ArXivPaper paper = new ArXivPaper(title, id.replace("/", "-"), authors, categories, pdfURL, todayDate, todayDate, abs, isNew);
-                        result.add(paper);
-                    }
-                }
-            }
-        }catch (IOException e) {// No internet connection
-            return null;
-        }catch( ParserConfigurationException | SAXException e) {// Parser problem
-            return null;
+            // Decrement the date by one day and try again
+            calendar.add(Calendar.DATE, -1); // Subtract one day
+            attempts += 1;
         }
-        return result;
-    }
 
-
-    public static ArrayList<ArXivPaper> extractPapersRSS_legacy(String category) {
-        ArrayList<ArXivPaper> result = new ArrayList<>();
-
-        System.out.println("Extracting RSS...");
-
-        try {
-            URL url = new URL(BASE_URL_RSS + category);
-
-
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            System.out.println("URL attempt at:");
-            System.out.println(url);
-            Document document = documentBuilder.parse(url.openStream());
-            System.out.println("Done");
-            document.getDocumentElement().normalize();
-
-            NodeList itemList = document.getElementsByTagName("item");
-
-
-
-            for (int i = 0; i < itemList.getLength(); i++) {
-                Node itemNode = itemList.item(i);
-
-
-                if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                    Element item = (Element) itemNode;
-
-                    //System.out.println(item.getTextContent().toString());
-
-                    // Title, id, and categories
-                    String title = "";
-                    String id = "";
-                    String[] categories = null;
-                    boolean isNew = true;
-
-                    if (item.getElementsByTagName("title").getLength() > 0) {
-
-                        Pattern pattern = Pattern.compile(ARXIV_RSS_TITLE_PATTERN);
-                        Matcher matcher = pattern.matcher(
-                                item.getElementsByTagName("title").item(0).getTextContent()
-                        );
-                        while (matcher.find()) {
-                            title = StringEscapeUtils.unescapeXml(matcher.group(1));
-                            id = matcher.group(2);
-                            categories = parseCategories(matcher, category);
-
-                            String groupTag = Objects.requireNonNull(matcher.group(4));
-                            isNew = !groupTag.equals(" UPDATED");
-                        }
-                    }
-
-                    // URL
-                    String pdfURL = "";
-                    if (item.getElementsByTagName("link").getLength() > 0) {
-                        pdfURL = item.getElementsByTagName("link").item(0)
-                                .getTextContent().replace("/abs/", "/pdf/") + ".pdf";
-                    }
-
-                    // Abstract
-                    String abs = "";
-                    if (item.getElementsByTagName("description").getLength() > 0) {
-                        String unescapedAbs = StringEscapeUtils.unescapeXml(
-                                item.getElementsByTagName("description").item(0).getTextContent()
-                        );
-                        abs = Jsoup.parse(unescapedAbs).text();
-                    }
-
-                    // Date
-                    // 2021-08-03T17:41:33Z
-                    Date dateObj = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime();
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
-                    String todayDate = simpleDateFormat.format(dateObj);
-
-                    // Authors
-                    String rawAuthors = item.getElementsByTagName("dc:creator").item(0).getTextContent();
-                    String[] rawAuthorsArray = rawAuthors.split(", ");
-                    //String[] authors = new String[rawAuthorsArray.length];
-                    ArrayList<String> authorsList = new ArrayList<>();
-                    for (int j = 0; j < rawAuthorsArray.length; j++) {
-                        Pattern patternAuthors = Pattern.compile("(.*?)<a href=\"(.*?)\">(.*?)</a>(.*?)");
-                        Matcher matcherAuthors = patternAuthors.matcher(rawAuthorsArray[j]);
-                        while (matcherAuthors.find()) {
-                            authorsList.add(
-                                    StringEscapeUtils.unescapeXml(matcherAuthors.group(3))
-                            );
-                        }
-                    }
-                    String[] authors = new String[authorsList.size()];
-                    for (int j = 0; j < authorsList.size(); j++) {
-                        authors[j] = authorsList.get(j);
-                    }
-
-                    // paper
-                    if((!id.isEmpty()) && (!title.isEmpty()) && (categories != null) && (authors.length>0) && (!pdfURL.isEmpty())) {
-                        ArXivPaper paper = new ArXivPaper(title, id.replace("/", "-"), authors, categories, pdfURL, todayDate, todayDate, abs, isNew);
-                        result.add(paper);
-                    }
-                }
-            }
-        }catch (IOException e) {// No internet connection
-            return null;
-        }catch( ParserConfigurationException | SAXException e) {// Parser problem
-            return null;
-        }
-        return result;
-    }
-
-    public static String[] parseCategories(Matcher matcher, String category){
-        String raw = Objects.requireNonNull(matcher.group(3));
-        String[] categoriesRaw = raw.split(", ");
-
-        ArrayList<String> categoriesList = new ArrayList<>();
-        for(String potentialCategory:categoriesRaw){
-            categoriesList.add(potentialCategory);
-        }
-        // Determining if it is cross-list. Adding main category if it is
-        if (!category.equals(categoriesList.get(0))) {
-            categoriesList.add(category);
-        }
-        // From list to array
-        String[] categories = new String[categoriesList.size()];
-        for (int j=0; j< categoriesList.size();j++){
-            categories[j] = categoriesList.get(j);
-        }
-        return categories;
+        return results;
     }
 
     public String simpleDate(String s){
@@ -559,7 +464,7 @@ public class ArXivScanner {
             dateSaved = rawPaper[1];
         }
 
-        ArXivPaper paper  = new ArXivPaper(title, id, authors, categories, pdfURL, publishedDate, updatedDate, abs, true);
+        ArXivPaper paper  = new ArXivPaper(title, id, authors, categories, pdfURL, publishedDate, updatedDate, abs, "new");
         paper.setDateSaved(dateSaved);
 
         return paper;

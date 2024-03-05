@@ -20,8 +20,11 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.example.arXiver_module.daily_feed.DayActivity;
 import com.example.arXiver_module.folder_system.Folder;
 import com.example.arXiver_module.folder_system.FolderActivity;
+import com.example.arXiver_module.search.SearchActivity;
+import com.example.arXiver_module.settings.SettingsActivity;
 import com.example.arXiver_module.task_util.BaseTask;
 import com.example.arXiver_module.task_util.TaskRunner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -120,7 +123,7 @@ public class HomeActivity extends ParentActivity implements FeedManagerDialog.Fe
         // Search
         Button searchButton = findViewById(R.id.searchButtonMain);
         View.OnClickListener searchListener = view -> {
-            Intent searchIntent = new Intent(getApplicationContext(),SearchActivity.class);
+            Intent searchIntent = new Intent(getApplicationContext(), SearchActivity.class);
             startActivity(searchIntent);
         };
         searchButton.setOnClickListener(searchListener);
@@ -137,7 +140,7 @@ public class HomeActivity extends ParentActivity implements FeedManagerDialog.Fe
         // Settings Button
         Button settingsButton = findViewById(R.id.settingsButton);
         View.OnClickListener settingsListener = view -> {
-            Intent settingsIntent = new Intent(getApplicationContext(),SettingsActivity.class);
+            Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
             settingsIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(settingsIntent);
         };
@@ -250,7 +253,7 @@ public class HomeActivity extends ParentActivity implements FeedManagerDialog.Fe
             b.setText(category);
             b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT,1f));
             View.OnClickListener rssFeedListener = view -> {
-                Intent dayIntent = new Intent(getApplicationContext(),DayActivity.class);
+                Intent dayIntent = new Intent(getApplicationContext(), DayActivity.class);
                 dayIntent.putExtra("category",category);
                 startActivity(dayIntent);
             };

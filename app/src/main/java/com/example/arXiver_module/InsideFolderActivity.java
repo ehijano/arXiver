@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.arXiver_module.browse.BrowseActivity;
 import com.example.arXiver_module.folder_system.Folder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
